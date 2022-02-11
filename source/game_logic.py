@@ -62,6 +62,7 @@ class game_logic:
         index = np.random.randint(0, len(self.current_event['consequences']))
         for user in self.users:
             self.process_user_choice(user, index, time_out_text=ge.get_time_out_text() + '\n\n')
+        self.update_room({'users': self.users})
 
     def set_new_event(self):
         event, event_id = ge.get_new_event(self.passed_events_ids)
