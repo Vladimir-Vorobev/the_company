@@ -68,7 +68,7 @@ class game_logic:
         self.current_event = deepcopy(event)
         del event['consequences']
         for user in self.users:
-            company_name = users.find_one({'nick': user})['company_name']
+            company_name = users.find_one({'nick': hf.modify_word(user)})['company_name']
             event_to_send = deepcopy(event)
             event_to_send['task'].format(company_name)
             sio.emit('new_event', {'event': event_to_send}, room=self.users[user]['sid'])
