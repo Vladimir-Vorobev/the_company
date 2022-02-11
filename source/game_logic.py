@@ -11,7 +11,7 @@ from datetime import datetime
 
 
 class game_logic:
-    def __init__(self, num, mode, start_time, game_users={}, timer_time=None, run=False, passed_events_ids=[], current_events={}):
+    def __init__(self, num, mode, start_time, game_users={}, timer_time=None, run=False, passed_events_ids=[], current_event={}):
         self.num = num
         self.users = game_users
         self.mode = mode
@@ -19,7 +19,7 @@ class game_logic:
         self.run = run
         self.passed_events_ids = passed_events_ids
         self.maximum_of_events = events_len
-        self.current_event = current_events
+        self.current_event = current_event
         self.start_time = start_time
         self.set_new_timer_time()
 
@@ -92,6 +92,7 @@ class game_logic:
 
     def start_game(self):
         self.run = True
+        self.set_new_event()
         for user in self.users:
             sio.emit('get_current_balance', {'balance': self.users[user]['balance']})
         sio.start_background_task(target=self.timer)
@@ -128,7 +129,7 @@ def restart_games():
             timer_time=room['timer_time'],
             run=room['run'],
             passed_events_ids=room['passed_events_ids'],
-            current_events=room['current_event'],
+            current_event=room['current_event'],
         )
         games[room['num']] = game
         game.start_game()
