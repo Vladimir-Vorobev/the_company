@@ -72,7 +72,7 @@ class authentification_precessing:
         data = dict(json.loads(data))
         if data['current_game_version'] != game_info.find_one()['game_version']:
             return 'incorrect_game_version'
-        user = users.find_one({'nick': hf.modify_word(data['nick'].strip())})
+        user = users.find_one({'nick': hf.modify_word(data['nick'])})
         if not user:
             return 'incorrect_nick'
         password, salt = user['password'].split(':')
