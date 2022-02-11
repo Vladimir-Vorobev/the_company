@@ -43,7 +43,6 @@ class helpful_functions:
         if session_id == hashlib.sha512(salt.encode() + data['session_id'].encode()).hexdigest():
             return True
         else:
-            print(data['session_id'])
             return False
 
     @staticmethod
