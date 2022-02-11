@@ -38,13 +38,12 @@ class helpful_functions:
         nick = self.modify_word(data['nick'])
         user = users.find_one({'nick': nick})
         if not user:
-            print(0)
             return False
         session_id, salt = user['session_id'].split(':')
-        if user and session_id == hashlib.sha512(salt.encode() + data['session_id'].encode()).hexdigest():
+        if session_id == hashlib.sha512(salt.encode() + data['session_id'].encode()).hexdigest():
             return True
         else:
-            print(1)
+            print(data['session_id'])
             return False
 
     @staticmethod

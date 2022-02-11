@@ -120,6 +120,7 @@ class authentification_precessing:
         else:
             info_game['visits'][year][month][day][hour] += 1
         game_info.update_one({}, {'$set': {'visits': info_game['visits']}})
+        print('login,', session_id)
         return user
 
     @staticmethod
