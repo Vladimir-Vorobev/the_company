@@ -105,14 +105,15 @@ class game_logic:
         for user in self.users:
             sio.emit('stop_game', {'game_time': game_time}, room=self.users[user]['sid'])
             player = users.find_one({'nick': hf.modify_word(user)})
-            users.update_one({'nick': user}, {'$inc': {'statistics.game_counter': 1}})
+            player_nick = hf.modify_word(user)
+            users.update_one({'nick': player_nick}, {'$inc': {'statistics.game_counter': 1}})
             if game_time > 600:
-                users.update_one({'nick': user}, {'$inc': {'statistics.win_game': 1}})
+                users.update_one({'nick': player_nick}, {'$inc': {'statistics.win_game': 1}})
             if not player['statistics']['max_game_time'] or game_time > player['statistics']['max_game_time']:
-                users.update_one({'nick': user}, {'$set': {'statistics.max_game_time': game_time}})
+                users.update_one({'nick': player_nick}, {'$set': {'statistics.max_game_time': game_time}})
                 rap.update_rating('max_game_time')
             if not player['statistics']['min_game_time'] or game_time < player['statistics']['min_game_time']:
-                users.update_one({'nick': user}, {'$set': {'statistics.min_game_time': game_time}})
+                users.update_one({'nick': player_nick}, {'$set': {'statistics.min_game_time': game_time}})
                 rap.update_rating('min_game_time')
         rooms.delete_one({'num': self.num})
         game_info.update_one({}, {'$inc': {'total_game_counter': 1}})
