@@ -14,6 +14,7 @@ from ratings import rap
 
 def user_leaves_game(nick):
     room = rooms.find_one({f'users.{nick}': {'$exists': True}})
+    print(room)
     if room:
         rooms.delete_one({'num': room['num']})
 
