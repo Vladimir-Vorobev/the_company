@@ -66,6 +66,8 @@ class game_logic:
     def set_new_event(self):
         event, event_id = ge.get_new_event(self.passed_events_ids)
         self.current_event = deepcopy(event)
+        print(event_id)
+        print(event)
         del event['consequences']
         for user in self.users:
             company_name = users.find_one({'nick': hf.modify_word(user)})['company_name']
