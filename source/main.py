@@ -96,7 +96,7 @@ def connect_to_game(data):
         return
     company_name = users.find_one({'nick': hf.modify_word(nick)})['company_name']
     event_to_send = deepcopy(games[num].current_event)
-    event_to_send['task'].format(company_name)
+    # event_to_send['task'].format(company_name)
     games[num].update_user_sid(nick, request.sid)
     sio.emit('get_my_game_info', {'balance': games[num].users[nick]['balance'], 'current_event': event_to_send})
 
