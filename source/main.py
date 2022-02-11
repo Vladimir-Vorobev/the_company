@@ -13,8 +13,9 @@ from ratings import rap
 
 
 def user_leaves_game(nick):
-    print(1)
-    rooms.delete_one({f'users.{nick}': {'$exists': True}})
+    room = rooms.find_one({f'users.{nick}': {'$exists': True}})
+    if room:
+        rooms.delete_one({'num': room['num']})
 
 
 @app.route('/registration', methods=['POST'])
