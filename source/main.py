@@ -12,6 +12,11 @@ from modules import hf
 from ratings import rap
 
 
+def user_leaves_game(nick):
+    nick = hf.modify_word(nick)
+    rooms.delete_one({f'users.{nick}': {'$exists': True}})
+
+
 @app.route('/registration', methods=['POST'])
 def reg_in():
     return ap.reg_in(request.data)
@@ -45,7 +50,17 @@ def disconnect():
 
 @sio.on('leave_app')
 def leave_app(data):
+    if data and not hf.check_session_id(data):
+        return
     up.disconnect(request.sid)
+    user_leaves_game(data['nick'])
+
+
+@sio.on('leave_game')
+def leave_game(data):
+    if data and not hf.check_session_id(data):
+        return
+    user_leaves_game(data['nick'])
 
 
 @sio.on('edit_profile')
