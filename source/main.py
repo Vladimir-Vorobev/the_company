@@ -78,7 +78,8 @@ def create_game(data):
     game = game_logic(num, mode, time)
     game.add_user(nick, request.sid)
     games[num] = game
-    sio.emit('create_room', {'num': num})
+    sio.emit('create_game', {'num': num})
+    game.start_game()
 
 
 @sio.on('connect_to_game')

@@ -28,6 +28,8 @@ class user_processing:
         del user['_id']
         del user['password']
         del user['session_id']
+        del user['reg_in_date']
+        del user['last_nick_update']
         del user['sid']
         emit('get_profile', user)
 
