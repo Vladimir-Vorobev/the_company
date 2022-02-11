@@ -60,7 +60,7 @@ def create_game(data):
     mode = data['mode']
     nick = data['nick']
     time = datetime.utcnow()
-    room = rooms.find_one({f'users.{nick}', {'$exists': True}})
+    room = rooms.find_one({f'users.{nick}': {'$exists': True}})
     if mode not in ['offline', 'online']:
         return
     if room:
