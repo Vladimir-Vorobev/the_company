@@ -107,7 +107,7 @@ class game_logic:
             sio.emit('stop_game', {'game_time': game_time}, room=self.users[user]['sid'])
             player = users.find_one({'nick': user})
             users.update_one({'nick': user}, {'$inc': {'statistics.game_counter': 1}})
-            if game_time > 300:
+            if game_time > 600:
                 users.update_one({'nick': user}, {'$inc': {'statistics.win_game': 1}})
             if not player['statistics']['max_game_time'] or game_time > player['statistics']['max_game_time']:
                 users.update_one({'nick': user}, {'$set': {'statistics.max_game_time': game_time}})
