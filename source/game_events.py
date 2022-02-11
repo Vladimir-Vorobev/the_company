@@ -182,8 +182,7 @@ time_out_texts = [
 class game_events:
     @staticmethod
     def get_new_event(exceptions):
-        index = np.random.choice([i for i in range(len(events)) if i not in exceptions])
-        print(type(index))
+        index = int(np.random.choice([i for i in range(len(events)) if i not in exceptions]))
         return deepcopy(events[index]), index
 
     @staticmethod
