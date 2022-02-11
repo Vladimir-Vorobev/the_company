@@ -68,7 +68,10 @@ class game_logic:
         self.current_event = deepcopy(event)
         del event['consequences']
         for user in self.users:
-            sio.emit('new_event', {'event': event}, room=self.users[user]['sid'])
+            company_name = users.find_one({'nick': user})['company_name']
+            event_to_send = deepcopy(event)
+            event_to_send['task'].format(company_name)
+            sio.emit('new_event', {'event': event_to_send}, room=self.users[user]['sid'])
 
         self.passed_events_ids.append(event_id)
         if len(self.passed_events_ids) == self.maximum_of_events:

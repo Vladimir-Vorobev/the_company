@@ -33,7 +33,7 @@ class authentification_precessing:
             'nick': nick,
             'password': hashlib.sha512(salt.encode() + data['password'].encode()).hexdigest() + ':' + salt,
             'avatar': None,
-            'company_name': '',
+            'company_name': 'Компания',
             'role': 'user',
             'user_id': self.make_user_id(),
             'session_id':

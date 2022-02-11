@@ -90,7 +90,7 @@ def connect_to_game(data):
     if num not in games:
         return
     games[num].update_user_sid(nick, request.sid)
-    sio.emit('get_my_game_info', {'balance': games[num]['users'][nick]['balance']})
+    sio.emit('get_my_game_info', {'balance': games[num]['users'][nick]['balance'], 'current_event': games[num]['current_event']})
 
 
 @sio.on('user_choice')
