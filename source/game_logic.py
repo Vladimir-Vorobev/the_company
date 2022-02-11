@@ -128,7 +128,7 @@ def restart_games():
             timer_time=room['timer_time'],
             run=room['run'],
             passed_events_ids=room['passed_events_ids'],
-            current_events=room['current_events'],
+            current_events=room['current_event'],
         )
         games[room['num']] = game
         game.start_game()
