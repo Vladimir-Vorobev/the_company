@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+from copy import deepcopy
 
 events = [
     {
@@ -44,7 +45,7 @@ class game_events:
     @staticmethod
     def get_new_event(exceptions):
         index = np.random.choice([i for i in range(len(events)) if i not in exceptions])
-        return events[index], index
+        return deepcopy(events[index]), index
 
     @staticmethod
     def get_time_out_text():

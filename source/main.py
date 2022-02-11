@@ -60,7 +60,11 @@ def create_game(data):
     mode = data['mode']
     nick = data['nick']
     time = datetime.utcnow()
+    room = rooms.find_one({f'users.{nick}', {'$exists': True}})
     if mode not in ['offline', 'online']:
+        return
+    if room:
+        sio.emit('create_game', {'num': room['num']})
         return
     num = 1
     while rooms.find_one({'num': num}):
