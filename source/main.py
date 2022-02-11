@@ -65,7 +65,6 @@ def create_game(data):
     if mode not in ['offline', 'online']:
         return
     if room:
-        print(1)
         sio.emit('create_game', {'num': room['num']})
         return
     num = 1
