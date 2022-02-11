@@ -72,9 +72,7 @@ class authentification_precessing:
         data = dict(json.loads(data))
         if data['current_game_version'] != game_info.find_one()['game_version']:
             return 'incorrect_game_version'
-        user = users.find_one({
-            'nick': data['nick']
-        })
+        user = users.find_one({'nick': hf.modify_word(data['nick'].strip())})
         if not user:
             return 'incorrect_nick'
         password, salt = user['password'].split(':')
@@ -83,7 +81,7 @@ class authentification_precessing:
         salt = uuid.uuid4().hex
         session_id = self.make_session_id()
         users.update_one(
-            {'email': data['email']},
+            {'nick': data['nick']},
             {
                 '$set':
                     {
