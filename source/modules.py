@@ -34,9 +34,8 @@ class helpful_functions:
         nick = nick.replace('M', 'М')
         return nick.strip()
 
-    @staticmethod
-    def check_session_id(data):
-        nick = data['nick']
+    def check_session_id(self, data):
+        nick = self.modify_word(data['nick'].strip())
         user = users.find_one({
             'nick': nick,
         })
