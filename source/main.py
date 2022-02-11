@@ -2,8 +2,9 @@
 from flask import request
 import eventlet.wsgi
 from datetime import datetime
+from copy import deepcopy
 
-from server_setup import app, sio, games, rooms
+from server_setup import app, sio, games, rooms, users
 # from room_socket_processing import rsp
 from user_processing import up
 from authentification import ap
@@ -94,8 +95,11 @@ def connect_to_game(data):
     nick = data['nick']
     if num not in games:
         return
+    company_name = users.find_one({'nick': hf.modify_word(nick)})['company_name']
+    event_to_send = deepcopy(games[num].current_event)
+    event_to_send['task'].format(company_name)
     games[num].update_user_sid(nick, request.sid)
-    sio.emit('get_my_game_info', {'balance': games[num].users[nick]['balance'], 'current_event': games[num].current_event})
+    sio.emit('get_my_game_info', {'balance': games[num].users[nick]['balance'], 'current_event': event_to_send})
 
 
 @sio.on('user_choice')
