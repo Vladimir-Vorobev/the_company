@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from server_setup import sio, games, users, rooms, game_info
 from game_events import ge, events_len
-# from system_messages_texts import cm
-# from ratings import rap
+from ratings import rap
 from modules import hf
 
 import numpy as np
@@ -111,9 +110,10 @@ class game_logic:
                 users.update_one({'nick': user}, {'$inc': {'statistics.win_game': 1}})
             if not player['statistics']['max_game_time'] or game_time > player['statistics']['max_game_time']:
                 users.update_one({'nick': user}, {'$set': {'statistics.max_game_time': game_time}})
+                rap.update_rating('max_game_time')
             if not player['statistics']['min_game_time'] or game_time < player['statistics']['min_game_time']:
                 users.update_one({'nick': user}, {'$set': {'statistics.min_game_time': game_time}})
-
+                rap.update_rating('min_game_time')
         rooms.delete_one({'num': self.num})
         game_info.update_one({}, {'$inc': {'total_game_counter': 1}})
 

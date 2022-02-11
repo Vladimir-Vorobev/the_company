@@ -5,12 +5,11 @@ from datetime import datetime
 from copy import deepcopy
 
 from server_setup import app, sio, games, rooms, users
-# from room_socket_processing import rsp
 from user_processing import up
 from authentification import ap
 from game_logic import game_logic, restart_games
 from modules import hf
-# from ratings import rap
+from ratings import rap
 
 
 @app.route('/registration', methods=['POST'])
@@ -109,9 +108,9 @@ def user_choice(data):
     games[data['num']].process_user_choice(data['nick'], data['choice_index'])
 
 
-# @sio.on('get_rating')
-# def get_rating(data):
-#     rap.get_rating(data)
+@sio.on('get_rating')
+def get_rating(data):
+    rap.get_rating(data)
 
 
 def send_ping():
