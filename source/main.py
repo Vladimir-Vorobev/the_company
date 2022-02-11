@@ -13,7 +13,6 @@ from ratings import rap
 
 
 def user_leaves_game(nick):
-    nick = hf.modify_word(nick)
     rooms.delete_one({f'users.{nick}': {'$exists': True}})
 
 
