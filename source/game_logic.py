@@ -104,7 +104,7 @@ class game_logic:
         game_time = delta.seconds + delta.microseconds // 10000
         for user in self.users:
             sio.emit('stop_game', {'game_time': game_time}, room=self.users[user]['sid'])
-            player = users.find_one({'nick': user})
+            player = users.find_one({'nick': hf.modify_word(user)})
             users.update_one({'nick': user}, {'$inc': {'statistics.game_counter': 1}})
             if game_time > 600:
                 users.update_one({'nick': user}, {'$inc': {'statistics.win_game': 1}})
