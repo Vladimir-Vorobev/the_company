@@ -58,7 +58,8 @@ class game_logic:
             self.run = False
             sio.sleep(7)
             self.set_new_timer_time()
-            self.start_game()
+            self.run = True
+            # self.start_game()
 
     def event_time_out(self):
         index = np.random.randint(0, len(self.current_event['consequences']))
