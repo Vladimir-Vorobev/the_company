@@ -11,6 +11,7 @@ from datetime import datetime
 
 class game_logic:
     def __init__(self, num, mode, start_time, game_users={}, timer_time=None, run=False, passed_events_ids=[], current_event={}):
+        print(passed_events_ids)
         self.num = num
         self.users = game_users
         self.mode = mode
