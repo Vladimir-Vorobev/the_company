@@ -14,6 +14,7 @@ from ratings import rap
 
 def user_leaves_game(nick):
     print(nick == 'SilveGfor')
+    print(nick)
     nick = hf.modify_word(nick)
     room = rooms.find_one({f'users.{nick}': {'$exists': True}})
     print(room)
@@ -62,8 +63,8 @@ def leave_app(data):
 
 @sio.on('leave_game')
 def leave_game(data):
-    if data and not hf.check_session_id(data):
-        return
+    # if data and not hf.check_session_id(data):
+    #     return
     user_leaves_game(data['nick'])
 
 
