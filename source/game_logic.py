@@ -101,8 +101,8 @@ class game_logic:
         self.run = True
         self.session_id = self.make_session_id()
         self.set_new_event()
-        for user in self.users:
-            sio.emit('get_current_balance', {'balance': self.users[user]['balance']})
+        # for user in self.users:
+        #     sio.emit('get_current_balance', {'balance': self.users[user]['balance']})
         self.update_room({'run': True})
         sio.start_background_task(target=self.timer)
 
