@@ -102,7 +102,7 @@ class game_logic:
         for user in self.users:
             sio.emit('get_current_balance', {'balance': self.users[user]['balance']})
         self.update_room({'run': True})
-        sio.start_background_task(target=self.timer)
+        self.timer()
 
     def stop_game(self):
         self.run = False
