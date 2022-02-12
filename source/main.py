@@ -100,8 +100,6 @@ def create_game(data):
     games[num] = game
     sio.emit('create_game', {'num': num}, room=request.sid)
     game.start_game()
-    for g in games:
-        print(games[g].users)
 
 
 @sio.on('connect_to_game')
@@ -115,7 +113,6 @@ def connect_to_game(data):
     company_name = users.find_one({'nick': nick})['company_name']
     event_to_send = deepcopy(games[num].current_event)
     # event_to_send['task'].format(company_name)
-    print(games[num].users, num, nick)
     games[num].update_user_sid(nick, request.sid)
     sio.emit('get_my_game_info', {'balance': games[num].users[nick]['balance'], 'current_event': event_to_send})
 
