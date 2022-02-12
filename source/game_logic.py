@@ -20,14 +20,16 @@ class game_logic:
         self.maximum_of_events = events_len
         self.current_event = current_event
         self.start_time = start_time
+        self.session_id = ''
         self.set_new_timer_time()
 
     def timer(self):
-        while self.run:
+        session_id = self.session_id
+        while self.run and session_id == self.session_id:
             sio.sleep(1)
             self.timer_time -= 1
             self.update_room({'timer_time': self.timer_time})
-            if self.timer_time == 0:
+            if self.timer_time == 0 and session_id == self.session_id:
                 self.event_time_out()
                 if self.run:
                     self.set_new_timer_time()
@@ -58,8 +60,7 @@ class game_logic:
             self.run = False
             sio.sleep(7)
             self.set_new_timer_time()
-            self.run = True
-            # self.start_game()
+            self.start_game()
 
     def event_time_out(self):
         index = np.random.randint(0, len(self.current_event['consequences']))
@@ -96,6 +97,7 @@ class game_logic:
 
     def start_game(self):
         self.run = True
+        self.session_id = self.make_session_id()
         self.set_new_event()
         for user in self.users:
             sio.emit('get_current_balance', {'balance': self.users[user]['balance']})
@@ -125,6 +127,15 @@ class game_logic:
 
     def update_room(self, data):
         rooms.update_one({'num': self.num}, {'$set': data})
+
+    @staticmethod
+    def make_session_id():
+        result = ''
+        letters = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
+        maximum = len(letters)
+        for i in range(128):
+            result += letters[np.random.randint(0, maximum)]
+        return result
 
 
 def restart_games():
