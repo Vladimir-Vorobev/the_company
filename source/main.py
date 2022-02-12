@@ -78,7 +78,7 @@ def create_game(data):
     if data and not hf.check_session_id(data):
         return
     mode = data['mode']
-    nick = data['nick']
+    nick = hf.modify_word(data['nick'])
     time = datetime.utcnow()
     room = rooms.find_one({f'users.{nick}': {'$exists': True}})
     if mode not in ['offline', 'online']:
