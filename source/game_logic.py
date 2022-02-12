@@ -25,12 +25,12 @@ class game_logic:
 
     def timer(self):
         session_id = self.session_id
-        while self.run and session_id == self.session_id:
+        while self.run and session_id == self.session_id and rooms.find_one({'num': self.num}):
             sio.sleep(1)
             # print(self.run)
             self.timer_time -= 1
             self.update_room({'timer_time': self.timer_time})
-            if self.timer_time == 0 and session_id == self.session_id:
+            if self.timer_time == 0 and session_id == self.session_id and rooms.find_one({'num': self.num}):
                 self.event_time_out()
                 if self.run:
                     self.set_new_timer_time()
