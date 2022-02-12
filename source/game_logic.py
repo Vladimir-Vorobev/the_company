@@ -57,11 +57,13 @@ class game_logic:
             if self.users[user]['balance'] <= 0:
                 self.stop_game()
                 break
-        if self.mode == 'offline':
-            self.run = False
-            self.set_new_timer_time()
-            sio.sleep(7)
-            self.start_game()
+        #if self.mode == 'offline':
+        self.run = False
+        self.set_new_timer_time()
+        print(1)
+        sio.sleep(7)
+        print(111)
+        self.start_game()
 
     def event_time_out(self):
         index = np.random.randint(0, len(self.current_event['consequences']))
