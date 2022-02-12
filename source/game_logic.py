@@ -41,7 +41,8 @@ class game_logic:
         self.update_room({'timer_time': self.timer_time})
 
     def process_user_choice(self, nick, choice_index, time_out_text=''):
-        if nick not in self.users:
+        if nick not in self.users or not rooms.find_one({'num': self.num}):
+            self.run = False
             return
         consequence = self.current_event['consequences'][choice_index]
         self.users[nick]['balance'] += consequence[1]
