@@ -17,7 +17,7 @@ class ratings_processing:
         emit('get_rating', rating)
 
     @staticmethod
-    def update_rating(rating_type):
+    def update_rating(rating_type, reverse):
         data = []
         if rating_type not in ['min_game_time', 'max_game_time']:
             return
@@ -28,7 +28,7 @@ class ratings_processing:
                 'avatar': user['avatar'],
                 'score': user['statistics'][rating_type],
             })
-        data.sort(key=itemgetter('score'), reverse=True)
+        data.sort(key=itemgetter('score'), reverse=reverse)
         ratings.update_one({'name': rating_type}, {'$set': {'data': data}})
 
 

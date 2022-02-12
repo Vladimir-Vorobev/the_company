@@ -32,7 +32,7 @@ class game_logic:
             self.update_room({'timer_time': self.timer_time})
             if self.timer_time == 0 and session_id == self.session_id and rooms.find_one({'num': self.num}):
                 self.event_time_out()
-                if self.run:
+                if self.run and session_id == self.session_id and rooms.find_one({'num': self.num}):
                     self.set_new_timer_time()
                     self.set_new_event()
 
@@ -119,14 +119,12 @@ class game_logic:
                 users.update_one({'nick': player_nick}, {'$inc': {'statistics.win_game': 1}})
             if not player['statistics']['max_game_time'] or game_time > player['statistics']['max_game_time']:
                 users.update_one({'nick': player_nick}, {'$set': {'statistics.max_game_time': game_time}})
-                rap.update_rating('max_game_time')
+                rap.update_rating('max_game_time', True)
             if not player['statistics']['min_game_time'] or game_time < player['statistics']['min_game_time']:
                 users.update_one({'nick': player_nick}, {'$set': {'statistics.min_game_time': game_time}})
-                rap.update_rating('min_game_time')
+                rap.update_rating('min_game_time', False)
         rooms.delete_one({'num': self.num})
-        print(games)
         del games[self.num]
-        print(games)
         game_info.update_one({}, {'$inc': {'total_game_counter': 1}})
 
     def update_room(self, data):
