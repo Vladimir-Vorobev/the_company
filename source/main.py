@@ -101,7 +101,7 @@ def create_game(data):
     sio.emit('create_game', {'num': num})
     game.start_game()
     for g in games:
-        print(g.users)
+        print(games[g].users)
 
 
 @sio.on('connect_to_game')
