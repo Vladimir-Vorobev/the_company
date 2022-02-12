@@ -111,7 +111,7 @@ class game_logic:
             player = users.find_one({'nick': hf.modify_word(user)})
             player_nick = hf.modify_word(user)
             users.update_one({'nick': player_nick}, {'$inc': {'statistics.game_counter': 1}})
-            if game_time > 600:
+            if game_time > 300:
                 users.update_one({'nick': player_nick}, {'$inc': {'statistics.win_game': 1}})
             if not player['statistics']['max_game_time'] or game_time > player['statistics']['max_game_time']:
                 users.update_one({'nick': player_nick}, {'$set': {'statistics.max_game_time': game_time}})
