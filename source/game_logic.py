@@ -27,6 +27,7 @@ class game_logic:
         session_id = self.session_id
         while self.run and session_id == self.session_id:
             sio.sleep(1)
+            print(self.run)
             self.timer_time -= 1
             self.update_room({'timer_time': self.timer_time})
             if self.timer_time == 0 and session_id == self.session_id:
@@ -58,7 +59,6 @@ class game_logic:
                 break
         if self.mode == 'offline':
             self.run = False
-            sio.sleep(7)
             self.set_new_timer_time()
             self.start_game()
 
