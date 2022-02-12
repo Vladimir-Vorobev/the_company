@@ -43,7 +43,6 @@ class game_logic:
             return
         consequence = self.current_event['consequences'][choice_index]
         self.users[nick]['balance'] += consequence[1]
-        print(123)
         sio.emit(
             'event_consequence',
             {
@@ -52,13 +51,14 @@ class game_logic:
             },
             room=self.users[nick]['sid'],
         )
-        print(321)
         for user in self.users:
             if self.users[user]['balance'] <= 0:
                 self.stop_game()
                 break
         if self.mode == 'offline':
+            self.run = False
             sio.sleep(7)
+            self.start_game()
 
     def event_time_out(self):
         index = np.random.randint(0, len(self.current_event['consequences']))
