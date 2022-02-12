@@ -41,10 +41,9 @@ class game_logic:
     def process_user_choice(self, nick, choice_index, time_out_text=''):
         if nick not in self.users:
             return
-        print(2)
         consequence = self.current_event['consequences'][choice_index]
-        print(consequence)
         self.users[nick]['balance'] += consequence[1]
+        print(123)
         sio.emit(
             'event_consequence',
             {
@@ -53,6 +52,7 @@ class game_logic:
             },
             room=self.users[nick]['sid'],
         )
+        print(321)
         for user in self.users:
             if self.users[user]['balance'] <= 0:
                 self.stop_game()
