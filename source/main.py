@@ -13,7 +13,10 @@ from ratings import rap
 
 
 def user_leaves_game(nick):
-    pass
+    nick = hf.modify_word(nick)
+    room = rooms.find_one({f'users.{nick}': {'$exists': True}})
+    if room:
+        rooms.delete_one({'num': room['num']})
 
 
 @app.route('/registration', methods=['POST'])
@@ -57,15 +60,7 @@ def leave_app(data):
 
 @sio.on('leave_game')
 def leave_game(data):
-    nick = hf.modify_word(data['nick'])
-    print(nick == 'SilveGfor')
-    for i in range(len(nick)):
-        print(nick[i] == 'SilveGfor'[i])
-    print(rooms.find_one({f'users.SilveGfor': {'$exists': True}}))
-    room = rooms.find_one({f'users.{nick}': {'$exists': True}})
-    print(room)
-    if room:
-        rooms.delete_one({'num': room['num']})
+    user_leaves_game(data['nick'])
 
 
 @sio.on('edit_profile')
