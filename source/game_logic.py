@@ -124,7 +124,9 @@ class game_logic:
                 users.update_one({'nick': player_nick}, {'$set': {'statistics.min_game_time': game_time}})
                 rap.update_rating('min_game_time')
         rooms.delete_one({'num': self.num})
+        print(games)
         del games[self.num]
+        print(games)
         game_info.update_one({}, {'$inc': {'total_game_counter': 1}})
 
     def update_room(self, data):
