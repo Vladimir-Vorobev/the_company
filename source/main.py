@@ -57,8 +57,6 @@ def leave_app(data):
 
 @sio.on('leave_game')
 def leave_game(data):
-    if data and not hf.check_session_id(data):
-        return
     nick = data['nick']
     print(nick == 'SilveGfor')
     for i in range(len(nick)):
