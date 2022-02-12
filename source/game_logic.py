@@ -39,7 +39,9 @@ class game_logic:
 
     def process_user_choice(self, nick, choice_index, time_out_text=''):
         if nick not in self.users:
+            print(1)
             return
+        print(2)
         consequence = self.current_event['consequences'][choice_index]
         self.users[nick]['balance'] += consequence[1]
         sio.emit(
