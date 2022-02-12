@@ -37,7 +37,7 @@ class game_logic:
                     self.set_new_event()
 
     def set_new_timer_time(self):
-        self.timer_time = np.random.randint(15, 20)
+        self.timer_time = np.random.randint(20, 25)
         self.update_room({'timer_time': self.timer_time})
 
     def process_user_choice(self, nick, choice_index, time_out_text=''):
