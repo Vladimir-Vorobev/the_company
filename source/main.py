@@ -98,7 +98,7 @@ def create_game(data):
     game = game_logic(num, mode, time, passed_events_ids=[], game_users={})
     game.add_user(nick, request.sid)
     games[num] = game
-    sio.emit('create_game', {'num': num})
+    sio.emit('create_game', {'num': num}, room=request.sid)
     game.start_game()
     for g in games:
         print(games[g].users)
