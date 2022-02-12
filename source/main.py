@@ -95,7 +95,7 @@ def create_game(data):
         'current_event': {},
         'start_time': time,
     })
-    game = game_logic(num, mode, time)
+    game = game_logic(num, mode, time, passed_events_ids=[])
     game.add_user(nick, request.sid)
     games[num] = game
     sio.emit('create_game', {'num': num})
