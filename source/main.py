@@ -120,7 +120,7 @@ def connect_to_game(data):
 def user_choice(data):
     if data and not hf.check_session_id(data):
         return
-    games[data['num']].process_user_choice(data['nick'], data['choice_index'])
+    games[data['num']].process_user_choice(hf.modify_word(data['nick']), data['choice_index'])
 
 
 @sio.on('get_rating')
