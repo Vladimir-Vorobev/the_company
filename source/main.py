@@ -57,7 +57,7 @@ def leave_app(data):
 
 @sio.on('leave_game')
 def leave_game(data):
-    nick = data['nick']
+    nick = hf.modify_word(data['nick'])
     print(nick == 'SilveGfor')
     for i in range(len(nick)):
         print(nick[i] == 'SilveGfor'[i])
@@ -111,7 +111,7 @@ def connect_to_game(data):
     if data and not hf.check_session_id(data):
         return
     num = data['num']
-    nick = data['nick']
+    nick = hf.modify_word(data['nick'])
     if num not in games:
         return
     company_name = users.find_one({'nick': hf.modify_word(nick)})['company_name']
