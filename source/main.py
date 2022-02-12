@@ -61,7 +61,8 @@ def leave_game(data):
         return
     nick = data['nick']
     print(nick == 'SilveGfor')
-    print(len(nick))
+    for i in range(len(nick)):
+        print(nick[i] == 'SilveGfor'[i])
     print(rooms.find_one({f'users.SilveGfor': {'$exists': True}}))
     room = rooms.find_one({f'users.{nick}': {'$exists': True}})
     print(room)
